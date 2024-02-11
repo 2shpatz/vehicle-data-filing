@@ -1,0 +1,15 @@
+{
+    "event_01": {
+        "vehicle_id": "123",
+        "event_type": "brake",
+        "time_stamp": "2024-02-11_11-50"
+
+        
+    },
+    "event_02": {
+        "vehicle_id": "123",
+        "event_type": "object_detected",
+        "time_stamp": "2024-02-11_11-49"
+    }
+
+}

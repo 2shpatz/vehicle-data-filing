@@ -1,0 +1,13 @@
+{
+    "vehicle_01": {
+        "vehicle_id": "123",
+        "status": "driving"
+    },
+    "vehicle_02": {
+        "vehicle_id": "456",
+        "status": "parking"
+    }
+
+
+    
+}
