@@ -3,6 +3,7 @@ import logging
 import shutil
 import json
 import time
+import threading
 from watchdog.observers import Observer
 from watchdog.events import PatternMatchingEventHandler
 
@@ -73,13 +74,16 @@ class StorageFiler():
         except Exception as err:
             logging.error("Error occurred: %s", err)
         
-    def start_storage_filer_process(self):
+    def _storage_filer_process(self):
         self._create_processed()
         if os.listdir(self.vehicle_files_dir):
             self._collect_data_from_files()
+
+        
         observer = Observer()
         observer.schedule(self.files_watchdog, self.vehicle_files_dir, recursive=False)
         observer.start()
+
         try:
             while True:
                 time.sleep(1)
@@ -88,6 +92,10 @@ class StorageFiler():
         finally:
             observer.join()
 
+    def start_storage_filer_process(self):
+        observer_thread = threading.Thread(target=self._storage_filer_process, args=())
+        observer_thread.daemon = True  # Daemonize thread so it exits when main program exits
+        observer_thread.start()
 
 if __name__ == '__main__':
 
