@@ -1,9 +1,6 @@
 
-import os
-import sys
 import logging
 from pymongo import MongoClient,DESCENDING
-from pymongo import errors as mongo_error
 import pandas as pd
 
 MONGOBD_SERVER = "localhost"
@@ -29,11 +26,9 @@ class VehicleDB(MongoClient):
         return self.db.list_collection_names()
     
     def insert_collection_listings(self, collection_name:str, listings:list[dict]):
-        try:
-            collection = self.get_collection(collection_name)
-            collection.insert_many(listings)
-        except Exception as err:
-            print(err)
+        collection = self.get_collection(collection_name)
+        result = collection.insert_many(listings)
+        return str(result)
 
     def get_database_name(self):
         return self.db_name
@@ -53,7 +48,7 @@ class VehicleDB(MongoClient):
 
     def find_one(self, collection_name:str, field:str, value:str):
         # retrieves the last document that found in the collection
-        collection = self.get_collection(collection_name) 
+        collection = self.get_collection(collection_name)
         return collection.find_one({field : value})
     
     def find_last(self, collection_name:str, field:str, value:str):
