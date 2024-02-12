@@ -9,6 +9,7 @@ function install_dependencies
 function main
 {
     install_dependencies
+    python3 main.py
 }
 
 main "$@"
